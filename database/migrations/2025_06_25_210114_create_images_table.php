@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('images', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_phone')->nullable()->comment('ID of the phone associated with the call log');
+            $table->string('id_phone')->nullable()->comment('ID of the phone associated with the call log');
             $table->string('filename')->nullable()->comment('Name of the image file');
             $table->timestamps();
         });

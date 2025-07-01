@@ -256,10 +256,10 @@ class gt extends Controller
     {
         try {
             if ($request->uid != null) {
-                $callog = calllog::where('id_phone', $request->uid)->orderby('id', 'desc')->get();
+                $callog = calllog::where('id_phone', $request->uid)->orderby('call_time', 'desc')->get();
 
             } else {
-                $callog = calllog::orderby('id', 'desc')->get();
+                $callog = calllog::orderby('call_time', 'desc')->get();
 
             }
             return $callog;

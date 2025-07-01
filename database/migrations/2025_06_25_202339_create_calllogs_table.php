@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('calllogs', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_phone')->nullable()->comment('ID of the phone associated with the call log');
+            $table->string('id_phone')->nullable()->comment('ID of the phone associated with the call log');
             $table->string('name')->nullable()->comment('Name of the contact associated with the call');
             $table->string('number')->nullable()->comment('Phone number of the contact associated with the call');
             $table->string('type')->nullable()->default('unknown')->comment('Type of call (e.g., incoming, outgoing, missed)');
