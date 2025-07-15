@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('sms', function (Blueprint $table) {
             $table->id();
             $table->string('id_phone')->nullable();
-            $table->unsignedBigInteger('sms_id')->nullable();
-            $table->unsignedBigInteger('dates')->nullable();
+            $table->string('sms_id')->nullable();
+            $table->string('dates')->nullable();
             $table->string('name')->nullable();
             $table->string('number')->nullable()->comment('Recipient phone number');
             $table->string('message')->nullable()->comment('SMS message content');

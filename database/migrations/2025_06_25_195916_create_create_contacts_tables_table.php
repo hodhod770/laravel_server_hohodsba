@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
               $table->string('id_phone')->nullable();   // الاسم اختياري
               $table->string('name')->nullable();   // الاسم اختياري
+              $table->string('id_number')->nullable();   // الاسم اختياري
         $table->string('number')->nullable();   // رقم الجوال يكون فريد
             $table->timestamps();
         });

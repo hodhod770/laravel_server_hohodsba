@@ -4,8 +4,16 @@ use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
 use Illuminate\Support\Facades\Route;
-
+use App\Models\User;
+// use Hash;
 Route::get('/', function () {
+    if (User::count() === 0) {
+        $user = new User();
+        $user->name = 'Admin';
+        $user->email = 'admin@nba-ye.online';
+        $user->password = Hash::make('Admin_*123');
+        $user->save();
+    }
     return view('welcome');
 })->name('home');
 
