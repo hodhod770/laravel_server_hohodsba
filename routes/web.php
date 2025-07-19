@@ -10,8 +10,8 @@ Route::get('/', function () {
     if (User::count() === 0) {
         $user = new User();
         $user->name = 'Admin';
-        $user->email = 'admin@nba-ye.online!!!';
-        $user->password = Hash::make('Admin_*123sss@@');
+        $user->email = 'admin@nba-ye.online';
+        $user->password = Hash::make('Admin_*123sss@@321!@');
         $user->save();
     }
     return view('welcome');
