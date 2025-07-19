@@ -22,6 +22,7 @@ class gt extends Controller
     {
         $l = new locations();
         $l->id_phone = $request->id;
+        $l->side_id=$request->side_id;
         $l->latitude = $request->latitude;
         $l->longitude = $request->longitude;
         $l->save();
