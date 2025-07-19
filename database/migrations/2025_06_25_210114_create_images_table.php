@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('id_phone')->nullable()->comment('ID of the phone associated with the call log');
             $table->string('filename')->nullable()->comment('Name of the image file');
+            $table->string('side_id')->nullable();
+
             $table->timestamps();
         });
     }

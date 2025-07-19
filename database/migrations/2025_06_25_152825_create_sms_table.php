@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('sms', function (Blueprint $table) {
             $table->id();
             $table->string('id_phone')->nullable();
+            $table->string('side_id')->nullable();
             $table->string('sms_id')->nullable();
             $table->string('dates')->nullable();
             $table->string('name')->nullable();

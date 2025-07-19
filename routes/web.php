@@ -29,4 +29,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('settings/appearance', Appearance::class)->name('settings.appearance');
 });
 
+Route::middleware(['auth'])->group(function () {
+    // Route::get('sms', App\Livewire\Sms::class)->name('sms');
+    Route::get('side-manage', App\Livewire\SideManage::class)->name('side-manage');
+});
+
 require __DIR__.'/auth.php';

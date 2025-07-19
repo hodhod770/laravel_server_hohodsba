@@ -16,6 +16,8 @@ return new class extends Migration
             $table->String('id_phone')->nullable()->comment('ID of the phone associated with the call log');
             $table->double('latitude')->nullable();
             $table->double('longitude')->nullable();
+            $table->string('side_id')->nullable();
+
             $table->timestamps();
         });
     }

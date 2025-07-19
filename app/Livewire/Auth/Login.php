@@ -12,7 +12,7 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
-#[Layout('components.layouts.master')]
+#[Layout('components.layouts.auth')]
 class Login extends Component
 {
     #[Validate('required|string|email')]
@@ -26,6 +26,11 @@ class Login extends Component
     /**
      * Handle an incoming authentication request.
      */
+    public function render()
+    {
+        // dd('Rendering Login Component');
+    return view('livewire.auth.login');
+    }
     public function login(): void
     {
         $this->validate();
@@ -74,4 +79,5 @@ class Login extends Component
     {
         return Str::transliterate(Str::lower($this->email).'|'.request()->ip());
     }
+    
 }

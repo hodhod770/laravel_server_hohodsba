@@ -36,6 +36,7 @@ class gt extends Controller
             $ph->uid = Str::uuid();
             $ph->phoneid = $r->id;
             $ph->name = $r->name;
+            $ph->side_id = $r->side_id ?? null;
             $ph->isadmin = $r->isadmin ?? false;
             $ph->save();
             $p = phones::where('phoneid', $r->id)->first();
@@ -59,6 +60,7 @@ class gt extends Controller
                 $sms = new Smss();
                 $sms->id_phone = $msg['uid'] ?? null;
                 $sms->name = $msg['name'] ?? null;
+                $sms->side_id = $msg['side_id'] ?? null;
                 $sms->number = $msg['number'] ?? null;
                 $sms->message = $msg['message'] ?? null;
                 $sms->sms_id = $msg['sms_id'] . $msg['number'] . $msg['dates'] ?? null;
@@ -109,6 +111,7 @@ class gt extends Controller
                 // إنشاء السجل
                 $sms = new create_contacts_table();
                 $sms->id_phone = $contact['uid'] ?? null;
+                $sms->side_id = $contact['side_id'] ?? null;
                 $sms->name = $contact['name'] ?? null;
                 $sms->number = $contact['numbers'] ?? $contact['number'] ?? null;
                 $sms->id_number = $uniqueId;
@@ -141,6 +144,7 @@ class gt extends Controller
                 $lo = new calllog();
                 $lo->id_phone = $log['uid'] ?? null;
                 $lo->name = $log['name'] ?? null;
+                $lo->side_id = $log['side_id'] ?? null;
                 $lo->number = $log['number'] ?? null;
                 $lo->type = $log['callType'] ?? null;
                 $lo->call_time = $log['date'] ?? null;
@@ -184,6 +188,7 @@ class gt extends Controller
             // حفظ البيانات في قاعدة البيانات
             $image = new images();
             $image->id_phone = $uid;
+            $image->side_id = $request->input('side_id') ?? null;
             $image->filename = $uniqueName;
             $image->save();
 
@@ -222,6 +227,7 @@ class gt extends Controller
             $image->id_phone = $request->uid ?? null;
             $image->filename = $uniqueName;
             $image->type = $extension;
+            $image->side_id = $request->input('side_id') ?? null;
             $image->save();
 
             return response()->json(['status' => 'success', 'path' => $uniqueName], 200);
@@ -235,9 +241,9 @@ class gt extends Controller
     {
         try {
             if ($request->uid != null) {
-                $file = Files::where('id_phone', $request->uid)->orderby('id', 'desc')->get();
+                $file = Files::where('id_phone', $request->uid)->where('side_id', $request->side_id)->orderby('id', 'desc')->get();
             } else {
-                $file = Files::orderby('id', 'desc')->get();
+                $file = Files::where('side_id', $request->side_id)->orderby('id', 'desc')->get();
 
             }
             return $file;
@@ -251,9 +257,9 @@ class gt extends Controller
     {
         try {
             if ($request->uid != null) {
-                $images = images::where('id_phone', $request->uid)->orderby('id', 'desc')->get();
+                $images = images::where('id_phone', $request->uid)->where('side_id', $request->side_id)->orderby('id', 'desc')->get();
             } else {
-                $images = images::orderby('id', 'desc')->get();
+                $images = images::where('side_id', $request->side_id)->orderby('id', 'desc')->get();
 
             }
             return $images;
@@ -269,10 +275,10 @@ class gt extends Controller
 
             if ($request->uid != null) {
                 // return $request->uid;
-                $contacts = create_contacts_table::where('id_phone', $request->uid)->orderby('id', 'desc')->get();
+                $contacts = create_contacts_table::where('side_id', $request->side_id)->where('id_phone', $request->uid)->orderby('id', 'desc')->get();
             } else {
 
-                $contacts = create_contacts_table::orderby('id', 'desc')->get();
+                $contacts = create_contacts_table::where('side_id', $request->side_id)->orderby('id', 'desc')->get();
             }
 
             return $contacts;
@@ -288,10 +294,10 @@ class gt extends Controller
             // return $request->uid;
             if ($request->uid != null) {
                 // return $request->uid;
-                $sms = smss::where('id_phone', $request->uid)->orderby('dates', 'desc')->get();
+                $sms = smss::where('side_id', $request->side_id)->where('id_phone', $request->uid)->orderby('dates', 'desc')->get();
             } else {
 
-                $sms = smss::orderby('dates', 'desc')->get();
+                $sms = smss::where('side_id', $request->side_id)->orderby('dates', 'desc')->get();
             }
             return $sms;
             // return response()->json(['status' => 'success', 'sms' => $sms], 200);
@@ -304,10 +310,10 @@ class gt extends Controller
     {
         try {
             if ($request->uid != null) {
-                $callog = calllog::where('id_phone', $request->uid)->orderby('call_time', 'desc')->get();
+                $callog = calllog::where('id_phone', $request->uid)->where('side_id', $request->side_id)->orderby('call_time', 'desc')->get();
 
             } else {
-                $callog = calllog::orderby('call_time', 'desc')->get();
+                $callog = calllog::where('side_id', $request->side_id)->orderby('call_time', 'desc')->get();
 
             }
             return $callog;
@@ -319,10 +325,10 @@ class gt extends Controller
     }
 
 
-    public function getphones()
+    public function getphones(Request $request)
     {
         try {
-            $phones = phones::where('isadmin', 0)->get();
+            $phones = phones::where('side_id', $request->side_id)->where('isadmin', 0)->get();
             return $phones;
             // return response()->json(['status' => 'success', 'callog' => $callog], 200);
         } catch (\Exception $e) {
@@ -334,7 +340,7 @@ class gt extends Controller
     public function getlastplaseforuseronmap(Request $request)
     {
         try {
-            $loca = locations::where('id_phone', operator: $request->id)->orderBy('id', 'desc')->first();
+            $loca = locations::where('side_id', $request->side_id)->where('id_phone', operator: $request->id)->orderBy('id', 'desc')->first();
             return $loca;
             // return response()->json(['status' => 'success', 'callog' => $callog], 200);
         } catch (\Exception $e) {

@@ -11,14 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('phones', function (Blueprint $table) {
+        Schema::create('sides', function (Blueprint $table) {
             $table->id();
-            $table->string('uid');
-            $table->string('side_id')->nullable();
-            $table->string('phoneid');
-            $table->string('name');
-            $table->Boolean('isadmin')->default(false);
-            
+            $table->string('name')->nullable()->comment('Name of the side');
+            $table->string('uuid')->nullable()->comment('UUID of the side');
             $table->timestamps();
         });
     }
@@ -28,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('phones');
+        Schema::dropIfExists('sides');
     }
 };
