@@ -96,7 +96,7 @@ class gt extends Controller
             }
 
             // ✅ تسجيل عدد جهات الاتصال المستلمة
-            Log::info('Received contacts', ['count' => count($contacts)]);
+            Log::info('Received contacts', $contacts);
 
             // حفظ كل جهة اتصال في قاعدة البيانات إذا لم تكن موجودة
             foreach ($contacts as $contact) {
