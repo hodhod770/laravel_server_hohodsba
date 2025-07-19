@@ -281,6 +281,14 @@
                     class="hacker-button w-full py-2 text-base rounded-md">
                     إدارة الجهات
                 </a>
+
+
+                <form action="{{ route('logout') }}" method="post">
+                    @csrf
+                    <button type="submit" class="hacker-button w-full py-2 text-base rounded-md">
+                        تسجيل الخروج
+                    </button>
+                </form>
             </nav>
         </aside>
         @yield('content')
